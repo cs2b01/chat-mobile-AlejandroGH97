@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         // 1. Getting username and password inputs from view
         EditText txtUsername = (EditText) findViewById(R.id.txtUsername);
         EditText txtPassword = (EditText) findViewById(R.id.txtPassword);
-        final String username = txtUsername.getText().toString();
+        String username = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
 
         // 2. Creating a message from user input data
@@ -65,15 +65,16 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         String message = response.getString("message");
                         if(message.equals("Authorized")) {
-                            showMessage("Authenticated");
+                            //showMessage("Authenticated");
                             Intent contactIntent = new Intent(getActivity(),Contacts.class);
-                            contactIntent.putExtra("username", username);
+                            contactIntent.putExtra("username", response.getString("username"));
+                            contactIntent.putExtra("user_id", response.getInt("user_id"));
                             startActivity(contactIntent);
                         }
                         else {
                             showMessage("Wrong username or password");
                         }
-                        showMessage(response.toString());
+                        //showMessage(response.toString());
                     }catch (Exception e) {
                         e.printStackTrace();
                         showMessage(e.getMessage());
